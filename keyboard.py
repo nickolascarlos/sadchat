@@ -17,7 +17,7 @@ def on_press(key):
             # Se for, o processa
             # Do contrário, assume-se ser uma mensagem
             if buffer.buffer.startswith("!"):
-                # processa_commando(buffer.buffer)
+                process_command(buffer.buffer)
             else:
                 # envia_mensagem(buffer.buffer)
                 pass
