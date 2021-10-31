@@ -1,3 +1,5 @@
+import state
+
 # Módulo para o buffer do teclado
 
 buffer = ""
@@ -6,9 +8,26 @@ def get_buffer():
     global buffer
     return buffer
 
+def set_buffer(new):
+    global buffer
+    buffer = new
+    process_buffer() # 'Corrige' o conteúdo do buffer (acentuação)
+    state.update_buffer()
+
+def backspace():
+    global buffer
+    set_buffer(buffer[0: state.get("cursor_position")-1] + buffer[state.get("cursor_position"):])
+    state.dec_cursor_position()
+
+def append(char):
+    global buffer
+    set_buffer(buffer[0: state.get("cursor_position")] + char + buffer[state.get("cursor_position"):])
+    state.inc_cursor_position()
+
 def clear_buffer():
     global buffer
-    buffer = ""
+    set_buffer("")
+    state.zero_cursor_position()
 
 # Função para 'corrigir' o buffer, substituindo sequências como
 # "~a", "~o", "`a", etc. para "ã", "õ", "à"
