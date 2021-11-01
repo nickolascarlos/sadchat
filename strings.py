@@ -11,7 +11,7 @@ connecting_to = "Connecting to %s:%s" # IP:PORT
 waiting_for_connection = "Waiting for connection on %s:%s"
 same_usernames_not_allowed = "CONNECTION REJECTED: It's not allowed to use the same usernames"
 lost_connection = "Lost connection"
-friend_disconnected = "%s went offine"
+friend_disconnected = "%s went offline"
 
 def __(s):
     return "\n\n%s\n" % (s)
