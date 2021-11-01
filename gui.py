@@ -7,7 +7,7 @@ import math
 import threading
 
 import buffer
-import bitmaps
+import asciiart
 
 import state
 
@@ -34,8 +34,6 @@ def init_screen():
     curses.init_pair(12, curses.COLOR_YELLOW, curses.COLOR_BLUE)
 
     draw_initial_screen()
-    
-
 
 def draw_image(image, x, y, text_attrs):
     # x = -1 e y = -1 para centralizar imagem
@@ -63,13 +61,13 @@ def draw_initial_screen():
     stdscr.clear()
     stdscr.refresh()
 
-    face_height = len(bitmaps.happy_face)
-    face_width = len(bitmaps.happy_face[0])
+    face_height = len(asciiart.happy_face)
+    face_width = len(asciiart.happy_face[0])
 
     face_y_start_centered = (height//2) - (face_height//2)
     face_x_start_centered = (width//2) - (face_width//2)
 
-    faces = [bitmaps.happy_face, bitmaps.sad_face]
+    faces = [asciiart.happy_face, asciiart.sad_face]
 
     for k, face in enumerate(faces):
         stdscr.clear()
@@ -82,7 +80,7 @@ def draw_initial_screen():
     time.sleep(0.8)
     stdscr.clear()
         
-    draw_image(bitmaps.sad_text, -1, -1, curses.color_pair(0))
+    draw_image(asciiart.sad_text, -1, -1, curses.color_pair(0))
 
     stdscr.refresh()
     time.sleep(1.5)
