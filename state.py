@@ -48,6 +48,9 @@ def dec_cursor_position(q = 1):
 def zero_cursor_position():
     update("cursor_position", 0)
 
+def set_cursor_position_to_left_end():
+    update("cursor_position", len(get('buffer')))
+
 def set_time(hour, minute, second):
     # Caso especial: não rerenderizará toda a interface, apenas a parte relacionada ao horário
     global state
