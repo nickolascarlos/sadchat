@@ -7,7 +7,11 @@ import state
 import gui
 from communication import send_message
 
+commands_history_access_index = 0
+
 def watch_keys():
+    global commands_history_access_index
+
     while True:
         try:
             p_key_pressed = gui.stdscr.get_wch()
@@ -28,13 +32,7 @@ def watch_keys():
             elif (32 <= key_pressed <= 126 or 192 <= key_pressed <= 255): # Caractere normal
                 buffer.append(chr(key_pressed))
             elif key_pressed == 27:
-                # Se for uma tecla especial (como setas)
-
-                # Teclas especiais quando pressionadas emitem vários códigos
-                # como se várias teclas fossem pressionadas sucessivamente
-                # As setas, por exemplo, emitem 27, 91 e [65 ou 66 ou 67 ou 68]
-                # Então, quando encontrarmos o código 27, devem ler os próximos
-                # dois códigos para que assim se possa determinar a tecla pressionada
+                # Tecla especial (como setas)
 
                 # Lê as próximas duas para determinar qual foi a tecla pressionada
                 cod_0 = ord(gui.stdscr.get_wch())
@@ -43,13 +41,22 @@ def watch_keys():
                 if cod_0 == 91:
                     # Setas
                     if cod_1 == 65: # Cima
-                        pass
+                        # Navega no histórico de comandos
+                        if commands_history_access_index > -1 * len(commands_history):
+                            commands_history_access_index -= 1
+                        buffer.set_buffer(commands_history[commands_history_access_index])
+                        state.set_cursor_position_to_left_end()
                     elif cod_1 == 66: # Baixo
-                        pass
-                    elif cod_1 == 67: # Direita
+                        # Navega no histórico de comandos
+                        if commands_history_access_index < len(commands_history)-1:
+                            commands_history_access_index += 1
+                        buffer.set_buffer(commands_history[commands_history_access_index])
+                        state.set_cursor_position_to_left_end()
+                    elif cod_1 == 67:
                         state.inc_cursor_position()
-                    elif cod_1 == 68: # Esquerda
+                    elif cod_1 == 68:
                         state.dec_cursor_position()
+
                 
         except Exception:
             pass

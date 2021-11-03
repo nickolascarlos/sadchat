@@ -3,6 +3,9 @@ import strings
 import state
 import communication
 
+# Histórico dos comandos executados
+commands_history = []
+
 def tokenize_command(command):
     args = command.split(" ")
     processed_args = []
@@ -31,6 +34,8 @@ def process_command(command):
     
     tokenized_command = tokenize_command(command)
 
+    add_command_to_history(command)
+
     # Argumentos para o comando: todos os elementos tokenizados,
     # menos o primeiro, que se trata justamente do comando
     command_args = tokenized_command[1:] if len(tokenized_command) > 1 else []
@@ -50,6 +55,11 @@ def process_command(command):
     except Exception as e:
         # Se não houver nenhum comando com o nome especificado
         state.add_message("command", "Unknown command ::" + str(e))
+
+def add_command_to_history(command, refreshIndex = True):
+    global commands_history
+
+    commands_history.append(command)
 
 #  -------------------------------
 # |   Implementação dos Comandos  |
