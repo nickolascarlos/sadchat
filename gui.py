@@ -147,7 +147,7 @@ def check_if_messages_fit_the_screen(quantity):
 
     height, width = stdscr.getmaxyx()
 
-    # %Quantity% partindo da última
+    # %Quantity% partindo da última mensagem
     
     # Últimas %quantity% mensagens
     messages = state.get("messages")
@@ -175,7 +175,7 @@ def draw_messages():
 
     # Quantidade de mensagens a se imprimir (a contar da última)
     # TODO: Melhorar. Método ineficiente
-    quantity_messages_to_print = len(state.get("messages"))
+    quantity_messages_to_print = 30 # Não imprime mais que 30 mensagens, por uma questão de eficiência
     while (not check_if_messages_fit_the_screen(quantity_messages_to_print)):
         quantity_messages_to_print -= 1
     

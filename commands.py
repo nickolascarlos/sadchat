@@ -75,15 +75,9 @@ def exec_ss(args):
     else:
         state.add_message("command", strings.your_secret_is % (state.get("secret")))
 
-            
-
 def exec_whoami(_):
-    # state.add_message("command", strings.please_set_your_username)
     username = state.get("username")
-    if (username):
-        state.add_message("command", strings.your_username_is % (username))
-    else:
-        state.add_message("command", strings.please_set_your_username)
+    state.add_message("command", (strings.your_username_is % (username)) if username else strings.please_set_your_username)
 
 def exec_setuser(args):
     if (len(args) < 1):
@@ -113,7 +107,7 @@ def exec_start(_):
 def exec_conn(args):
     if not communication.is_able_to_connect(verbose = True): return
 
-    if (len(args) < 1):
+    if len(args) < 1:
         return state.add_message("command", strings.insufficient_arguments)
 
     host = args[0]
