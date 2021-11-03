@@ -28,7 +28,13 @@ def watch_keys():
             elif (32 <= key_pressed <= 126 or 192 <= key_pressed <= 255): # Caractere normal
                 buffer.append(chr(key_pressed))
             elif key_pressed == 27:
-                # Tecla especial (como setas)
+                # Se for uma tecla especial (como setas)
+
+                # Teclas especiais quando pressionadas emitem vários códigos
+                # como se várias teclas fossem pressionadas sucessivamente
+                # As setas, por exemplo, emitem 27, 91 e [65 ou 66 ou 67 ou 68]
+                # Então, quando encontrarmos o código 27, devem ler os próximos
+                # dois códigos para que assim se possa determinar a tecla pressionada
 
                 # Lê as próximas duas para determinar qual foi a tecla pressionada
                 cod_0 = ord(gui.stdscr.get_wch())
@@ -38,12 +44,12 @@ def watch_keys():
                     # Setas
                     if cod_1 == 65: # Cima
                         pass
-                    elif cod_1 == 66:
+                    elif cod_1 == 66: # Baixo
                         pass
-                    elif cod_1 == 67:
-                        pass
-                    elif cod_1 == 68:
-                        pass
+                    elif cod_1 == 67: # Direita
+                        state.inc_cursor_position()
+                    elif cod_1 == 68: # Esquerda
+                        state.dec_cursor_position()
                 
         except Exception:
             pass
