@@ -12,6 +12,7 @@ def watch_keys():
         try:
             p_key_pressed = gui.stdscr.get_wch()
             key_pressed = ord(p_key_pressed)
+
             if key_pressed == 10: # Enter
                 # Verifica se o que está no buffer se trata de um comando
                 # Se for, o processa
@@ -26,10 +27,26 @@ def watch_keys():
                 buffer.backspace()
             elif (32 <= key_pressed <= 126 or 192 <= key_pressed <= 255): # Caractere normal
                 buffer.append(chr(key_pressed))
+            elif key_pressed == 27:
+                # Tecla especial (como setas)
+
+                # Lê as próximas duas para determinar qual foi a tecla pressionada
+                cod_0 = ord(gui.stdscr.get_wch())
+                cod_1 = ord(gui.stdscr.get_wch())
+
+                if cod_0 == 91:
+                    # Setas
+                    if cod_1 == 65: # Cima
+                        pass
+                    elif cod_1 == 66:
+                        pass
+                    elif cod_1 == 67:
+                        pass
+                    elif cod_1 == 68:
+                        pass
+                
         except Exception:
             pass
-        # # if key_pressed == curses.KEY_ENTER:
-        # state.add_message("quiiboah", str(key_pressed))
 
 
 def start_keyboard_listening():
