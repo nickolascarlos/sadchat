@@ -18,6 +18,7 @@ def init_screen():
     global stdscr
 
     stdscr = curses.initscr()
+    curses.echo(False)
 
     curses.start_color()
     curses.use_default_colors()
