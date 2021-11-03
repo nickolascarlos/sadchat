@@ -1,6 +1,5 @@
 import buffer
 import strings
-from strings import __
 import state
 import communication
 
@@ -52,7 +51,6 @@ def process_command(command):
         # Se não houver nenhum comando com o nome especificado
         state.add_message("command", "Unknown command ::" + str(e))
 
-
 #  -------------------------------
 # |   Implementação dos Comandos  |
 #  -------------------------------
@@ -68,8 +66,16 @@ def exec_ss(args):
     if secret:
         state.update("secret", args[0])
         state.add_message("command", strings.secret_set)
+
+        state.update("main_alert", strings.to_see_your_secret)
+
+        if state.get_username():
+            state.add_message("command", strings.all_set)
+
     else:
-        state.add_message("command", strings.your_secret_is % (configs.get_secret()))
+        state.add_message("command", strings.your_secret_is % (state.get("secret")))
+
+            
 
 def exec_whoami(_):
     # state.add_message("command", strings.please_set_your_username)
@@ -88,7 +94,16 @@ def exec_setuser(args):
     state.set_username(args[0].strip())
     state.add_message("command", strings.username_set % (args[0].strip()))
 
+    if not state.get("secret"):
+        state.update("main_alert", strings.set_your_secret)
+    else:
+        state.add_message("command", strings.all_set)
+
+
 def exec_start(_):
+
+    if not communication.is_able_to_connect(verbose = True): return
+
     # Se o servidor já estiver aberto, avisa
     if communication.tcp: return state.add_message("command", "Servidor já aberto e aguardando conexão")
     
@@ -96,6 +111,8 @@ def exec_start(_):
     state.add_message("command", strings.waiting_for_connection % (_host, _port))
 
 def exec_conn(args):
+    if not communication.is_able_to_connect(verbose = True): return
+
     if (len(args) < 1):
         return state.add_message("command", strings.insufficient_arguments)
 
@@ -104,13 +121,5 @@ def exec_conn(args):
     state.add_message("command", strings.connecting_to % (host, port))
     communication.connect_to(host, port)
 
-def exec_chkconn(args):
-    return # TODO
-    if (len(args) < 1):
-        return state.add_message("command", strings.insufficient_arguments)
-
-    host = args[0]
-    port = args[1] if len(args) > 1 else None
-
-    state.add_message("command", strings.connecting_to % (host, port))
-    communication.conn(host, port)
+def exec_chkconn(_):
+    state.add_message("command", (strings.you_are_connected_to % (communication.friend_username)) if communication.conn else (strings.your_are_disconnected))

@@ -1,6 +1,7 @@
 import buffer as _buffer_
 from datetime import datetime
 import gui
+import strings
 
 
 # Arquivo para guardar o estado da aplicação
@@ -13,7 +14,7 @@ state = {
     "username": "",
     "status": "offline",
     "secret": "",
-    "main_alert": "Set your user using !setuser"
+    "main_alert": strings.set_your_username
 }
 
 def get(key):

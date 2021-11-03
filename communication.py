@@ -121,7 +121,7 @@ def init():
 
         return HOST, PORT
     except Exception as e:
-        state.add_message("command", "Probleminha ao abrir o server, provavelmente .:. " + str(e)[0:100]+'...')
+        state.add_message("command", "Error: " + str(e)[0:100]+'...')
         return -1, -1
 
 
@@ -130,29 +130,12 @@ def connect_to(host, port):
     y.name = "Communication-CLIENT-THREAD"
     y.start()
 
-
-# def handshake_as_server():
-#     global conn
-#     global friend_username
-
-#     # Pega o nome de usuário do cliente
-#     friend_username = conn.recv(1024).decode('utf-8').strip()
-    
-#     state.add_message("command", "Conectado com %s" % (str(friend_username)))
-
-#     # Envia seu nome pro cliente
-#     conn.sendall(bytes(state.get("username"), "utf-8"))
-
-# def handshake_as_client():
-#     global conn
-#     global friend_username
-
-#     # Envia seu nome pro cliente
-#     conn.sendall(bytes(state.get("username"), "utf-8"))
-
-#     # Pega o nome de usuário do cliente
-#     friend_username = conn.recv(1024).decode('utf-8').strip()
-    
-#     state.add_message("command", "Conectado com %s" % (str(friend_username)))
-
-
+# Função para verificar se o usuário
+# está apto a realizar uma conexão; isso é:
+# Se ele já tem um usuário e já definiu uma chave
+# para o HMAC
+def is_able_to_connect(verbose = False):
+    is_able = state.get_username() != '' and state.get("secret") != ''
+    if not is_able and verbose:
+        state.add_message("command", strings.please_set_user_and_secret)
+    return is_able

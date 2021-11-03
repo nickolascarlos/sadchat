@@ -12,6 +12,11 @@ waiting_for_connection = "Waiting for connection on %s:%s"
 same_usernames_not_allowed = "CONNECTION REJECTED: It's not allowed to use the same usernames"
 lost_connection = "Lost connection"
 friend_disconnected = "%s went offline"
-
-def __(s):
-    return "\n\n%s\n" % (s)
+please_set_user_and_secret = "Please, set a username and a secret key before connection"
+you_are_connected_to = "You are connected to %s"
+your_are_disconnected = "You are disconnected"
+set_your_username = "Set your user: !setuser [user]"
+set_your_secret = "Set your secret key: !ss [secret_key]"
+to_see_your_secret = "To see your secret key, type: !ss"
+secret_not_set = "Secret key not set"
+all_set = "All set. Type !start to wait for a connection or connect using !conn [IP] [PORT]"

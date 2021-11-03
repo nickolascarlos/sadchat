@@ -8,6 +8,7 @@ import threading
 
 import buffer
 import asciiart
+import strings
 
 import state
 
@@ -114,7 +115,7 @@ def draw_interface():
 
     # Escreve o estado do segredo
     if not state.get("secret"):
-        stdscr.addstr(height-5, 15, "[!] Segredo não definido", curses.color_pair(4))
+        stdscr.addstr(height-5, 15, "[!] " + strings.secret_not_set, curses.color_pair(4))
 
     draw_messages()
 
