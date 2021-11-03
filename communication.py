@@ -98,10 +98,12 @@ def messages_loop():
 def send_message(message):
     global conn
 
-    if conn:
-        # Se estiver conectado,
-        # envia a mensagem para o contato
-        conn.sendall(bytes(message, 'utf-8'))
+    if not conn:
+        state.add_message("command", strings.please_connect_before_sending_messages)
+        return
+
+    # envia a mensagem para o contato
+    conn.sendall(bytes(message, 'utf-8'))
 
     # Adiciona a mensagem à lista
     state.add_message(state.get_username(), message)

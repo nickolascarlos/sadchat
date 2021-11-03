@@ -24,7 +24,8 @@ def watch_keys():
                 if  buffer.get_buffer().startswith("!"):
                     process_command(buffer.get_buffer())
                 else:
-                    send_message(buffer.get_buffer())
+                    if buffer.get_buffer(): # EVita o processamento de buffer vazio
+                        send_message(buffer.get_buffer())
                 # E então limpa o buffer
                 buffer.clear_buffer()
             elif key_pressed == 127: # Backspace
