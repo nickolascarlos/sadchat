@@ -19,11 +19,12 @@ Chat com verificação de integridade e autenticidade através de HMAC
   ```bash
   python3 .
   ```
-
+ &nbsp;
 * Essa é a tela do SadChat:
 
 ![Tela SadChat](https://raw.githubusercontent.com/nickolascarlos/sadchat/main/images/tela_01.png)
 
+&nbsp;
 * Antes de se conectar com alguém, você deve configurar seu username e sua chave secreta.
   
   Para isso, use os seguintes comandos:
@@ -35,8 +36,9 @@ Chat com verificação de integridade e autenticidade através de HMAC
   ```bash
   !ss sua_chave_secreta
   ```
+&nbsp;
 
-* Pronto, agora está tudo configurado para inicializar a conexão.
+* Pronto, agora está tudo configurado para iniciar a conexão.
 
   ![Tela SadChat](https://raw.githubusercontent.com/nickolascarlos/sadchat/main/images/tela_02.png)
 
@@ -44,13 +46,16 @@ Chat com verificação de integridade e autenticidade através de HMAC
   Se quiser se conectar a alguém, use o comando `!conn IP PORTA`
 
   **Obviamente**, para que você se conecte com o comando `!conn` a pessoa do outro lado deve estar esperando uma conexão 
+  
+&nbsp;
 
 * Após feita a conexão, é só conversar:
 
   ![Tela SadChat](https://raw.githubusercontent.com/nickolascarlos/sadchat/main/images/tela_03.png)
 
-  Para cada mensagem recebida, é feita uma verificação HMAC usando a chave especificada. O feedback é dado pelo emoji 👍 (se a mensagem tiver sido autenticada com sucesso) ou ❌ (se a autenticação falhar).
+  Para cada mensagem recebida, é feita uma verificação HMAC usando a chave especificada.  
+  O feedback é dado pelo emoji 👍 (se a mensagem tiver sido autenticada com sucesso) ou ❌ (se a autenticação falhar).
+
+&nbsp;
 
 * Para se desconectar, basta enviar a mensagem `bye` que a conexão será cortada.
-
-
