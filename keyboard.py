@@ -23,6 +23,7 @@ def watch_keys():
                 # Do contrário, assume-se ser uma mensagem
                 if  buffer.get_buffer().startswith("!"):
                     process_command(buffer.get_buffer())
+                    commands_history_access_index = 0
                 else:
                     if buffer.get_buffer(): # EVita o processamento de buffer vazio
                         send_message(buffer.get_buffer())

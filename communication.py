@@ -83,7 +83,6 @@ def messages_loop():
     while True:
         msg = conn.recv(1024)
         if msg.decode('utf-8').strip() == 'bye':
-            conn.sendall(bytes('sul8r' , 'utf-8'))
             conn.close()
             conn = None
             state.add_message("command", strings.friend_disconnected % (friend_username))
