@@ -47,7 +47,7 @@ def process_command(command):
             'echo': exec_echo,
             'ss': exec_ss,
             'whoami': exec_whoami,
-            'setuser': exec_setuser,
+            'su': exec_su,
             'start': exec_start,
             'conn': exec_conn,
             'chkconn': exec_chkconn
@@ -89,7 +89,7 @@ def exec_whoami(_):
     username = state.get("username")
     state.add_message("command", (strings.your_username_is % (username)) if username else strings.please_set_your_username)
 
-def exec_setuser(args):
+def exec_su(args):
     if (len(args) < 1):
         return state.add_message("command", strings.insufficient_arguments)
     if (args[0].strip() in ['', 'command']):

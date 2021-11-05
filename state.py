@@ -26,10 +26,10 @@ def update(key, new_value):
     state[key] = new_value
     gui.rerender()
 
-def add_message(sender, new_message):
+def add_message(sender, new_message, valid = True):
     if (not new_message): return
     now = datetime.now()
-    update("messages", [*get("messages"), ["[%02d:%02d:%02d]" % (now.hour, now.minute, now.second), sender, new_message]])
+    update("messages", [*get("messages"), ["[%02d:%02d:%02d]" % (now.hour, now.minute, now.second), sender, new_message, valid]])
 
 def update_buffer():
     update("buffer", _buffer_.get_buffer())

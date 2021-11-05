@@ -35,7 +35,7 @@ def init_screen():
     curses.init_pair(11, curses.COLOR_GREEN, curses.COLOR_BLUE)
     curses.init_pair(12, curses.COLOR_YELLOW, curses.COLOR_BLUE)
 
-    draw_initial_screen()
+    # draw_initial_screen()
 
 def draw_image(image, x, y, text_attrs):
     # x = -1 e y = -1 para centralizar imagem
@@ -152,7 +152,7 @@ def check_if_messages_fit_the_screen(quantity):
     
     # Últimas %quantity% mensagens
     messages = state.get("messages")
-    last_q_messages = messages[len(messages)-quantity:len(messages)]
+    last_q_messages = messages[-quantity:]
 
     # Faremos uma simulação da impressão das mensagens
     # Se line_to_write, ao final, for maior que height - 7, então as últimas %quantity% mensagens
@@ -165,7 +165,7 @@ def check_if_messages_fit_the_screen(quantity):
         for i in range(0, math.ceil(len(message[2][offset:]) / width)):
             line_to_write += 1
 
-    if (line_to_write > height - 7):
+    if (line_to_write > height - 6):
         return False
     return True
 
@@ -181,7 +181,7 @@ def draw_messages():
         quantity_messages_to_print -= 1
     
     messages = state.get("messages")
-    messages_to_print = messages[len(messages)-quantity_messages_to_print : len(messages)] # Pega as %n% últimas mensagens
+    messages_to_print = messages[-quantity_messages_to_print:] # Pega as %n% últimas mensagens
 
     # Escreve as mensagens
     line_to_write = 3 # Linha inicial = 4
@@ -196,7 +196,7 @@ def draw_messages():
             stdscr.addstr(line_to_write, 12, sender,  curses.A_BOLD | (curses.color_pair(9) if sender == state.get_username() else curses.color_pair(8)))
 
             # Imprimimos o indicador de verificação HMAC
-            verified = True
+            verified = message[3]
             stdscr.addstr(line_to_write, 12 + len(sender), " [%s] " % ("👍" if verified else "❌"), curses.A_BOLD | curses.color_pair(8))
 
             offset = width - 15 - len(sender)

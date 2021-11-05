@@ -3,6 +3,7 @@ import threading
 
 import state
 import strings
+import hmac_bridge as hmac
 
 HOST = ''
 PORT = 9975
@@ -80,19 +81,40 @@ def messages_loop():
     global conn
     global friend_username
 
-    while True:
-        msg = conn.recv(1024)
-        if msg.decode('utf-8').strip() == 'bye':
-            conn.close()
-            conn = None
-            state.add_message("command", strings.friend_disconnected % (friend_username))
-            state.update("status", "offline")
-            break
-        if not msg:
-            state.add_message("command", strings.friend_disconnected % (friend_username))
-            state.update("status", "offline")
-            break
-        state.add_message(friend_username, msg)
+    try:
+        while True:
+            received = conn.recv(1024)
+
+            message: bytes = received[0:-16]
+            expected_hash: bytes = received[-16:]
+
+            # state.add_message(friend_username, str(list(received)))
+
+            message_str: str = message.decode('latin1')
+
+            if message_str.strip() == 'bye' or not message_str:
+                conn.close()
+                conn = None
+                state.add_message("command", strings.friend_disconnected % (friend_username))
+                state.update("status", "offline")
+                break
+
+            # Verifica se a mensagem é válida
+            valid = hmac.verify(state.get("secret"), message, expected_hash)
+
+            state.add_message(friend_username, message_str, valid)
+            # state.add_message(friend_username, "CALCULATED HASH: " + hmac.generate(state.get("secret"), message).hex())
+            # state.add_message(friend_username, "EXPECTED HASH: " + expected_hash.hex())
+
+            # if valid:
+            #     state.add_message("command", "VÁLIDA")
+            # else:
+            #     state.add_message("command", "INVÁLIDA")
+
+    except Exception as e:
+        state.add_message("command", str(e))
+
+
 
 def send_message(message):
     global conn
@@ -101,8 +123,14 @@ def send_message(message):
         state.add_message("command", strings.please_connect_before_sending_messages)
         return
 
-    # envia a mensagem para o contato
-    conn.sendall(bytes(message, 'utf-8'))
+    try:
+        message_bytes = bytes(message, 'latin1')
+        hmac_hash = hmac.generate(state.get("secret"), message_bytes)
+    except Exception as e:
+        state.add_message("command", str(e))
+
+    # Envia a mensagem para o contato
+    conn.sendall(message_bytes + hmac_hash)
 
     # Adiciona a mensagem à lista
     state.add_message(state.get_username(), message)
