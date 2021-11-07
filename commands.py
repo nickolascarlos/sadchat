@@ -109,7 +109,7 @@ def exec_start(_):
     if not communication.is_able_to_connect(verbose = True): return
 
     # Se o servidor já estiver aberto, avisa
-    if communication.tcp: return state.add_message("command", "Servidor já aberto e aguardando conexão")
+    if communication.tcp: return state.add_message("command", strings.server_waiting_for_connection)
     
     _host, _port = communication.init() 
     state.add_message("command", strings.waiting_for_connection % (_host, _port))
