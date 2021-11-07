@@ -60,12 +60,20 @@ def server_loop():
 
 def connect_to_server(host, port):
     global conn
+    global tcp
     global friend_username
-
+    
     tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    tcp.connect((host, port))
-
-    conn = tcp
+    try:
+        tcp.settimeout(5) # Define 5s de timeout
+        tcp.connect((host, port))
+        tcp.settimeout(None) # Como eu quero timeout só pra conexão, aqui eu tiro
+                          # para não afetar a comunicação
+        conn = tcp
+    except Exception as e:
+        state.add_message("command", strings.connection_couldnt_be_established)
+        tcp = None
+        return
         
     state.update("status", "connected")
 
@@ -113,8 +121,6 @@ def messages_loop():
     except Exception as e:
         state.add_message("command", str(e))
 
-
-
 def send_message(message):
     global conn
 
@@ -138,20 +144,20 @@ def init():
     global tcp
 
     # Abre o servidor
+    tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         tcp.bind((HOST, state.get("port")))
         tcp.listen(1)
-
-        y = threading.Thread(target = server_loop)
-        y.name = "Communication-SERVER-THREAD"
-        y.start()
-
-        return HOST, state.get("port")
     except Exception as e:
         state.add_message("command", "Error: " + str(e)[0:150]+'...')
+        tcp = None
         return -1, -1
 
+    y = threading.Thread(target = server_loop)
+    y.name = "Communication-SERVER-THREAD"
+    y.start()
+
+    return HOST, state.get("port")        
 
 def connect_to(host, port):
     y = threading.Thread(target = connect_to_server, args=(host, int(port) if port else 9975))

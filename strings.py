@@ -26,3 +26,4 @@ server_waiting_for_connection = "Server is already open and waiting for connecti
 connection_port_set_to = "Connection port set to %s"
 port_cant_be_set_to = "Port can't be set to %s"
 unknown_command = "Unknown command"
+connection_couldnt_be_established = "Connection couldn't be established"

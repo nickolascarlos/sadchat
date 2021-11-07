@@ -113,7 +113,9 @@ def exec_start(_):
     if communication.tcp: return state.add_message("command", strings.server_waiting_for_connection)
     
     _host, _port = communication.init() 
-    state.add_message("command", strings.waiting_for_connection % (_host, _port))
+    
+    if _host != -1 and _port != -1:
+        state.add_message("command", strings.waiting_for_connection % (_host, _port))
 
 def exec_conn(args):
     if not communication.is_able_to_connect(verbose = True): return
