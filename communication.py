@@ -4,6 +4,7 @@ import threading
 import state
 import strings
 import hmac_bridge as hmac
+from utilities import hex_format
 
 HOST = ''
 PORT = 9975
@@ -103,13 +104,11 @@ def messages_loop():
             valid = hmac.verify(state.get("secret"), message, expected_hash)
 
             state.add_message(friend_username, message_str, valid)
-            # state.add_message(friend_username, "CALCULATED HASH: " + hmac.generate(state.get("secret"), message).hex())
-            # state.add_message(friend_username, "EXPECTED HASH: " + expected_hash.hex())
+            
+            if not valid:
+                calculated_hash = hmac.generate(state.get("secret"), message) # Calcula o HMAC para mostrar para o usuário
+                state.add_message("command", strings.invalid_message % (hex_format(expected_hash.hex()), hex_format(calculated_hash.hex())))
 
-            # if valid:
-            #     state.add_message("command", "VÁLIDA")
-            # else:
-            #     state.add_message("command", "INVÁLIDA")
 
     except Exception as e:
         state.add_message("command", str(e))
