@@ -140,16 +140,16 @@ def init():
     # Abre o servidor
     try:
         tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        tcp.bind((HOST, PORT))
+        tcp.bind((HOST, state.get("port")))
         tcp.listen(1)
 
         y = threading.Thread(target = server_loop)
         y.name = "Communication-SERVER-THREAD"
         y.start()
 
-        return HOST, PORT
+        return HOST, state.get("port")
     except Exception as e:
-        state.add_message("command", "Error: " + str(e)[0:100]+'...')
+        state.add_message("command", "Error: " + str(e)[0:150]+'...')
         return -1, -1
 
 

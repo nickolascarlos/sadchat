@@ -50,7 +50,8 @@ def process_command(command):
             'su': exec_su,
             'start': exec_start,
             'conn': exec_conn,
-            'chkconn': exec_chkconn
+            'chkconn': exec_chkconn,
+            'sp': exec_sp
         })[tokenized_command[0][1:]](command_args)
     except Exception as e:
         # Se não houver nenhum comando com o nome especificado
@@ -127,3 +128,10 @@ def exec_conn(args):
 
 def exec_chkconn(_):
     state.add_message("command", (strings.you_are_connected_to % (communication.friend_username)) if communication.conn else (strings.your_are_disconnected))
+
+def exec_sp(args):
+    try:
+        state.set_port(int(args[0]))
+        state.add_message("command", strings.connection_port_set_to % (args[0]))
+    except Exception as e:
+        state.add_message("command", strings.port_cant_be_set_to % (args[0]))

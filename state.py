@@ -14,7 +14,8 @@ state = {
     "username": "",
     "status": "offline",
     "secret": "",
-    "main_alert": strings.set_your_username
+    "main_alert": strings.set_your_username,
+    "port": 9975
 }
 
 def get(key):
@@ -64,4 +65,9 @@ def set_username(new):
 
 def get_username():
     return get("username")
+
+def set_port(new):
+    # Não causa rerenderização
+    global state
+    state["port"] = new
 
