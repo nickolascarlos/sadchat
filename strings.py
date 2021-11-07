@@ -25,3 +25,4 @@ invalid_message = "WARNING: The message above may have been modified by a malici
 server_waiting_for_connection = "Server is already open and waiting for connection"
 connection_port_set_to = "Connection port set to %s"
 port_cant_be_set_to = "Port can't be set to %s"
+unknown_command = "Unknown command"

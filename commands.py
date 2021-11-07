@@ -53,9 +53,9 @@ def process_command(command):
             'chkconn': exec_chkconn,
             'sp': exec_sp
         })[tokenized_command[0][1:]](command_args)
-    except Exception as e:
+    except KeyError:
         # Se não houver nenhum comando com o nome especificado
-        state.add_message("command", "Unknown command ::" + str(e))
+        state.add_message("command", strings.unknown_command)
 
 def add_command_to_history(command, refreshIndex = True):
     global commands_history
