@@ -1,3 +1,10 @@
+import sys
+import strings
+
+if not sys.platform.startswith('linux'):
+        print(strings.please_change_to_linux)
+        sys.exit(-1)
+
 import keyboard
 import gui
 import timing

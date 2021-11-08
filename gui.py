@@ -5,6 +5,7 @@ import random
 from random import randint
 import math
 import threading
+import sys
 
 import buffer
 import asciiart
@@ -18,6 +19,13 @@ def init_screen():
     global stdscr
 
     stdscr = curses.initscr()
+    height, width = stdscr.getmaxyx()
+
+    if height < 20 or width < 20:
+        curses.endwin()
+        print(strings.please_increase_your_terminal_dimensions)
+        sys.exit(0)
+
     curses.echo(False)
 
     curses.start_color()
