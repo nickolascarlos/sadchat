@@ -43,7 +43,7 @@ def init_screen():
     curses.init_pair(11, curses.COLOR_GREEN, curses.COLOR_BLUE)
     curses.init_pair(12, curses.COLOR_YELLOW, curses.COLOR_BLUE)
 
-    # draw_initial_screen()
+    draw_initial_screen()
 
 def draw_image(image, x, y, text_attrs):
     # x = -1 e y = -1 para centralizar imagem
