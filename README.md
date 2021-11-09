@@ -8,19 +8,19 @@ Chat com verificação de integridade e autenticidade através de HMAC
 ---
 ### Como usar o SadChat?
 
-* Primeiramente, execute o script:
+1. Primeiramente, execute o script:
   
   ```bash
   python3 pasta_do_sadchat
   ```
 
  &nbsp;
-* Essa é a tela do SadChat:
+2. Essa é a tela do SadChat:
 
 ![Tela SadChat](https://raw.githubusercontent.com/nickolascarlos/sadchat/main/images/tela_01.png)
 
 &nbsp;
-* Antes de se conectar com alguém, você deve configurar seu username e sua chave secreta.
+3. Antes de se conectar com alguém, você deve configurar seu username e sua chave secreta.
   
   Para isso, use os seguintes comandos:
 
@@ -33,7 +33,7 @@ Chat com verificação de integridade e autenticidade através de HMAC
   ```
 &nbsp;
 
-* Pronto, agora está tudo configurado para iniciar a conexão.
+4. Pronto, agora está tudo configurado para iniciar a conexão.
 
   ![Tela SadChat](https://raw.githubusercontent.com/nickolascarlos/sadchat/main/images/tela_02.png)
 
@@ -44,17 +44,38 @@ Chat com verificação de integridade e autenticidade através de HMAC
   
 &nbsp;
 
-* Após feita a conexão, é só conversar:
+5. Após feita a conexão, é só conversar:
 
   ![Tela SadChat](https://raw.githubusercontent.com/nickolascarlos/sadchat/main/images/tela_03.png)
 
-  Para cada mensagem recebida, é feita uma verificação HMAC usando a chave especificada.  
-  O feedback é dado pelo emoji ✅ (se a mensagem tiver sido autenticada com sucesso) ou ❌ (se a autenticação falhar).
+  * Para se desconectar, basta enviar a mensagem `bye` que a conexão será cortada.
 
-  Quando a autenticação HMAC falhar, aparecerá uma mensagem detalhando qual a hash recebida (EXPECTED HASH) e qual a hash calculada pelo script, usando a mensagem e a chave configurada:
+#### Verificação de integridade e autenticidade com HMAC
+
+  Para cada mensagem recebida, é feita uma verificação HMAC usando a chave especificada.  
+  O feedback é dado pelo emoji ✅ (se a verificação de integridade e autenticidade tiver sucesso) ou ❌ (se a verificação falhar).
+
+  Quando a verificação HMAC falhar, aparecerá uma mensagem detalhando qual a hash recebida (EXPECTED HASH) e qual a hash calculada pelo script, usando a mensagem e a chave configurada:
 
   ![Tela SadChat](https://raw.githubusercontent.com/nickolascarlos/sadchat/main/images/tela_04.png)
 
-&nbsp;
+##### Testes:
 
-* Para se desconectar, basta enviar a mensagem `bye` que a conexão será cortada.
+  Para testar um ataque de autenticidade, basta configurar chaves diferentes para os usuários conectados.
+
+  Para testar o corrompimento não malicioso de mensagens, basta ligar o simulador de corrompimento em algum dos dois clientes através do comando `!simulatecorruption` (para desligá-lo, execute mesmo comando novamente).
+
+  Quando o simulador de corrompimento estiver ligado, será alterado algum bit do primeiro byte da mensagem, que será enviada juntamente com o HMAC da mensagem íntegra.
+
+  Exemplo do funcionamento do simulador de corrompimento:
+
+  ###### Cliente 1:
+  
+  ![Tela SadChat](https://raw.githubusercontent.com/nickolascarlos/sadchat/main/images/tela_05.png)
+
+  ![Tela SadChat](https://raw.githubusercontent.com/nickolascarlos/sadchat/main/images/tela_06.png)
+  
+  ###### Cliente 2:
+
+  ![Tela SadChat](https://raw.githubusercontent.com/nickolascarlos/sadchat/main/images/tela_07.png)
+
