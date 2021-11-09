@@ -12,7 +12,7 @@ commands_history_access_index = 0
 def watch_keys():
     global commands_history_access_index
 
-    while True:
+    while not state.get("should_threads_exit"):
         try:
             p_key_pressed = gui.stdscr.get_wch()
             key_pressed = ord(p_key_pressed)

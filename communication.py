@@ -20,7 +20,7 @@ def server_loop():
     global friend_username
 
     try:
-        while True:
+        while not state.get("should_threads_exit"):
             # A abertura do servidor foi movida para a função init()
 
             # Muda o estado para esperando
@@ -91,7 +91,7 @@ def messages_loop():
     global friend_username
 
     try:
-        while True:
+        while not state.get("should_threads_exit"):
             received = conn.recv(1024)
 
             message: bytes = received[0:-16]

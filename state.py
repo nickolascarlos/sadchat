@@ -15,7 +15,8 @@ state = {
     "status": "offline",
     "secret": "",
     "main_alert": strings.set_your_username,
-    "port": 9975
+    "port": 9975,
+    "should_threads_exit": False
 }
 
 def get(key):
@@ -70,4 +71,8 @@ def set_port(new):
     # Não causa rerenderização
     global state
     state["port"] = new
+
+def set_threads_exit_flag():
+    global state
+    state["should_threads_exit"] = True
 

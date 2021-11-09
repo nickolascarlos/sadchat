@@ -205,11 +205,11 @@ def draw_messages():
 
             # Imprimimos o indicador de verificação HMAC
             verified = message[3]
-            stdscr.addstr(line_to_write, 12 + len(sender), " [%s] " % ("👍" if verified else "❌"), curses.A_BOLD | curses.color_pair(8))
+            stdscr.addstr(line_to_write, 12 + len(sender), " %s " % ("✅" if verified else "❌"), curses.A_BOLD | curses.color_pair(8))
 
             offset = width - 15 - len(sender)
             # Imprimimos a primeira linha da mensagem:
-            stdscr.addstr(line_to_write, 19 + len(sender), message[2][0:offset], curses.color_pair(0))
+            stdscr.addstr(line_to_write, 16 + len(sender), message[2][0:offset], curses.color_pair(0))
             line_to_write += 1
             # Imprime o resto da mensagem
             for i in range(0, math.ceil(len(message[2][offset:]) / width)):
@@ -254,7 +254,3 @@ def rerender():
     draw_gui()    
 
 init_screen()
-
-# Inicia a thread que desenhará a interface
-y = threading.Thread(target=draw_gui)
-y.start()

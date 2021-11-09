@@ -5,7 +5,7 @@ import threading
 import state
 
 def update_time():
-    while True:
+    while not state.get("should_threads_exit"):
         now = datetime.datetime.now()
         state.set_time(now.hour, now.minute, now.second)
         time.sleep(1)
