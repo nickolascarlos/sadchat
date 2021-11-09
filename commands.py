@@ -51,7 +51,8 @@ def process_command(command):
             'start': exec_start,
             'conn': exec_conn,
             'chkconn': exec_chkconn,
-            'sp': exec_sp
+            'sp': exec_sp,
+            'simulatecorruption': exec_simulatecorruption
         })[tokenized_command[0][1:]](command_args)
     except KeyError:
         # Se não houver nenhum comando com o nome especificado
@@ -137,3 +138,11 @@ def exec_sp(args):
         state.add_message("command", strings.connection_port_set_to % (args[0]))
     except Exception as e:
         state.add_message("command", strings.port_cant_be_set_to % (args[0]))
+
+def exec_simulatecorruption(_):
+    if not state.get_simulate_corruption():
+        state.add_message("command", strings.simulate_corruption_on)
+        state.set_simulate_corruption(True)
+    else:
+        state.add_message("command", strings.simulate_corruption_off)
+        state.set_simulate_corruption(False)

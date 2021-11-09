@@ -1,5 +1,6 @@
 import socket
 import threading
+import random
 
 import state
 import strings
@@ -128,17 +129,32 @@ def send_message(message):
         state.add_message("command", strings.please_connect_before_sending_messages)
         return
 
+    # message_bytes
+    # hmac_hash
+
     try:
         message_bytes = bytes(message, 'latin1')
         hmac_hash = hmac.generate(state.get("secret"), message_bytes)
+    
+        # Se o simulador de corrompimento de mensagem estiver ligado, corrompe a mensagem
+        if state.get_simulate_corruption():
+            state.add_message("command", strings.sending_corrupted_message)
+            message_bytes_to_corrupt = list(message_bytes)
+
+            # Corrompe a mensagem alterando algum bit (NOT) do primeiro byte da mensagem.
+            # O NOT aqui é feito através de um número potência de dois (o qual determinará
+            # qual bit será alterado) e com a operação bitwise XOR.
+            message_bytes_to_corrupt[0] = 2**random.randint(0, 5) ^ message_bytes_to_corrupt[0]
+
+            message_bytes = bytes(message_bytes_to_corrupt)
+
+        # Envia a mensagem para o contato
+        conn.sendall(message_bytes + hmac_hash)
+
+        # Adiciona a mensagem à lista
+        state.add_message(state.get_username(), message)
     except Exception as e:
         state.add_message("command", str(e))
-
-    # Envia a mensagem para o contato
-    conn.sendall(message_bytes + hmac_hash)
-
-    # Adiciona a mensagem à lista
-    state.add_message(state.get_username(), message)
     
 def init():
     global tcp

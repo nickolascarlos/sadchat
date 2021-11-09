@@ -16,7 +16,8 @@ state = {
     "secret": "",
     "main_alert": strings.set_your_username,
     "port": 9975,
-    "should_threads_exit": False
+    "should_threads_exit": False,
+    "simulate_corruption": False
 }
 
 def get(key):
@@ -75,4 +76,10 @@ def set_port(new):
 def set_threads_exit_flag():
     global state
     state["should_threads_exit"] = True
+
+def get_simulate_corruption():
+    return get("simulate_corruption")
+
+def set_simulate_corruption(new):
+    update("simulate_corruption", new)
 
