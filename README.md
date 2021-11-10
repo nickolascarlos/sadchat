@@ -5,6 +5,21 @@
 Chat com verificação de integridade e autenticidade através de HMAC
 </div>
 
+## Índice
+ * [O que é o SadChat](https://github.com/nickolascarlos/sadchat#o-que-é-o-sadchat)
+ * [Como usá-lo](https://github.com/nickolascarlos/sadchat#como-usar-o-sadchat)
+  * [Verificação HMAC](https://github.com/nickolascarlos/sadchat#verifica%C3%A7%C3%A3o-de-integridade-e-autenticidade-com-hmac)
+  * [Orientações para os testes da aplicação](https://github.com/nickolascarlos/sadchat#como-usar-o-sadchat)
+
+---
+### O que é o SadChat?
+
+SadChat é um chat que visa à segurança de seus usuários (mas não sua privacidade).
+
+Ele conecta, diretamente, dois usuários e para cada mensagem trocada faz uma verificação HMAC (do lado de quem recebe a mensagem), averiguando, assim, não só a integridade da mensagem mas também sua autenticidade, o que evita que alguma das partes seja ludibriada por um agente malicioso.
+
+Caso a verificação HMAC revele alguma inconsistência na mensagem, é mostrado um ❌ e uma mensagem mais técnica mostrando a hash HMAC recebida (e que é a esperada) e a hash calculada pelo SadChat.
+
 ---
 ### Como usar o SadChat?
 
