@@ -6,10 +6,10 @@ Chat com verificação de integridade e autenticidade através de HMAC
 </div>
 
 ## Índice
- * [O que é o SadChat](https://github.com/nickolascarlos/sadchat#o-que-é-o-sadchat)
- * [Como usá-lo](https://github.com/nickolascarlos/sadchat#como-usar-o-sadchat)
-  * [Verificação HMAC](https://github.com/nickolascarlos/sadchat#verifica%C3%A7%C3%A3o-de-integridade-e-autenticidade-com-hmac)
-  * [Orientações para os testes da aplicação](https://github.com/nickolascarlos/sadchat#como-usar-o-sadchat)
+ - [O que é o SadChat](https://github.com/nickolascarlos/sadchat#o-que-é-o-sadchat)
+ - [Como usá-lo](https://github.com/nickolascarlos/sadchat#como-usar-o-sadchat)
+     - [Verificação HMAC](https://github.com/nickolascarlos/sadchat#verifica%C3%A7%C3%A3o-de-integridade-e-autenticidade-com-hmac)
+     - [Orientações para os testes da aplicação](https://github.com/nickolascarlos/sadchat#como-usar-o-sadchat)
 
 ---
 ### O que é o SadChat?
